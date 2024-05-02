@@ -1,0 +1,79 @@
+{
+  "nodes": {
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1701680307,
+        "narHash": "sha256-kAuep2h5ajznlPMD9rnQyffWG8EM/C73lejGofXvdM8=",
+        "rev": "4022d587cbbfd70fe950c1e2083a02621806a725",
+        "revCount": 88,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/numtide/flake-utils/0.1.88%2Brev-4022d587cbbfd70fe950c1e2083a02621806a725/018c340d-3287-7c66-818b-f2f646a808e3/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/numtide/flake-utils/0.1.88.tar.gz"
+      }
+    },
+    "libtmi8": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-ST9E5LANnA7IV5cY0fbk+MSukaOczxnkXV1/IH7ps4U=",
+        "path": "./lib/libtmi8",
+        "type": "path"
+      },
+      "original": {
+        "path": "./lib/libtmi8",
+        "type": "path"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1702346276,
+        "narHash": "sha256-eAQgwIWApFQ40ipeOjVSoK4TEHVd6nbSd9fApiHIw5A=",
+        "rev": "cf28ee258fd5f9a52de6b9865cdb93a1f96d09b7",
+        "revCount": 553141,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/NixOs/nixpkgs/0.2311.553141%2Brev-cf28ee258fd5f9a52de6b9865cdb93a1f96d09b7/018c652c-2ff2-777b-bade-dae9c2abe1e1/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/NixOs/nixpkgs/%2A.tar.gz"
+      }
+    },
+    "root": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "libtmi8": "libtmi8",
+        "nixpkgs": "nixpkgs"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

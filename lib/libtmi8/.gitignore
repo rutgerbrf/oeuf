@@ -1,0 +1,3 @@
+src/*.o
+libtmi8.a
+libtmi8.so

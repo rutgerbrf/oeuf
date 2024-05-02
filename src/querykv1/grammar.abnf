@@ -1,0 +1,44 @@
+; This grammar does *not* allow fields to contain LF, unless the entire content
+; of the field is quoted. The file is simply rejected otherwise.
+; I took the liberty to take some inspiration from the somewhat similar IETF RFC 4180.
+
+document   = [header NEWLINE] (comment / record / empty-line) *(NEWLINE (comment / record / empty-line)) [NEWLINE] / header
+
+header     = OPENBRACK *NOTCRLF
+comment    = SEMICOLON *NOTCRLF
+
+empty-line = *WHITESPACE
+
+record     = field *(PIPE field)
+field      = *WHITESPACE field-data *WHITESPACE
+field-data = escaped / unescaped
+
+; Unescaped fields are also allowed to contain double quotes,
+; they are just not interpreted in any special way.
+escaped    = DQUOTE *(TEXTDATA / WHITESPACE / NEWLINE / PIPE / 2DQUOTE) DQUOTE
+unescaped  = [TEXTDATA *(*WHITESPACE (TEXTDATA / DQUOTE))]
+
+HTAB       = %x09  ; <horizontal tab,  "\t">
+LF         = %x0A  ; <line feed,       "\n">
+VTAB       = %x0B  ; <vertical tab,    "\v">
+FF         = %x0C  ; <form feed,       "\f">
+CR         = %x0D  ; <carriage return, "\r">
+SPACE      = %x20  ; <space, " ">
+DQUOTE     = %x22  ; "
+SEMICOLON  = %x3B  ; ;
+OPENBRACK  = %x5B  ; [
+PIPE       = %x7C  ; |
+
+; All codepoints, except CR, LF, SPACE, FF, HTAB, VTAB, PIPE, DQUOTE
+; Semicolon is included, as comments are only defined as 'lines starting with a semicolon'.
+; So it should be fine if a semicolon is part of a field, the rest of the line would not
+; be interpreted as a comment in that case.
+TEXTDATA   = %x00-08 / %x0E-1F / %x21 / %x23-5A / %x5C-7B / %x7D-10FFFF
+
+; Not including LF here even though TMI8/KV1 does not officially consider it
+; a newline, as newlines are defined as 'CR optionally followed by LF'
+WHITESPACE = SPACE / FF / HTAB / VTAB
+
+; All codepoints excluding CR and LF
+NOTCRLF    = %x00-09 / %x0B-0C / %x0E-10FFFF
+NEWLINE    = CR [LF]

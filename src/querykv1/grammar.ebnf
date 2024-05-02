@@ -1,0 +1,47 @@
+/* This grammar does allow fields to contain stray LFs, not after any specific
+ * CR. I took the liberty to take some inspiration from the somewhat similar
+ * IETF RFC 4180.
+ */
+document   ::= (header NEWLINE)? (comment | record | empty-line) (NEWLINE (comment | record | empty-line))* NEWLINE? | header
+
+header     ::= OPENBRACK NOTCR*
+comment    ::= SEMICOLON NOTCR*
+
+empty-line ::= WHITESPACE*
+
+record     ::= field (PIPE field)*
+field      ::= WHITESPACE* field-data WHITESPACE*
+field-data ::= DQUOTE escaped DQUOTE | unescaped
+
+/* Unescaped fields are also allowed to contain double quotes, they are just
+ * not interpreted in any special way.
+ */
+escaped    ::= (TEXTDATA | WHITESPACE | NEWLINE | PIPE | DQUOTE DQUOTE)*
+unescaped  ::= (TEXTDATA (WHITESPACE* (TEXTDATA | DQUOTE))*)?
+
+HTAB       ::= #x09  /* <horizontal tab,  "\t"> */
+LF         ::= #x0A  /* <line feed,       "\n"> */
+VTAB       ::= #x0B  /* <vertical tab,    "\v"> */
+FF         ::= #x0C  /* <form feed,       "\f"> */
+CR         ::= #x0D  /* <carriage return, "\r"> */
+SPACE      ::= #x20  /* <space, " "> */
+DQUOTE     ::= #x22  /* " */
+SEMICOLON  ::= #x3B  /* ; */
+OPENBRACK  ::= #x5B  /* [ */
+PIPE       ::= #x7C  /* | */
+
+/* All codepoints, except CR, LF, SPACE, FF, HTAB, VTAB, PIPE, DQUOTE.
+ * Semicolon is included, as comments are only defined as 'lines starting with
+ * a semicolon'. So it should be fine if a semicolon is part of a field, the
+ * rest of the line would not be interpreted as a comment in that case.
+ */
+TEXTDATA   ::= [#x00-#x08#x0E-#x1F#x21#x23-#x5A#x5C-#x7B#x7D-#x10FFFF]
+
+/* Including LF here as TMI8/KV1 does not consider it a newline,
+ * as newlines are defined as 'CR optionally followed by LF'
+ */
+WHITESPACE ::= SPACE | LF | FF | HTAB | VTAB
+
+/* All codepoints excluding CR and LF */
+NOTCR      ::= [#x00-#x0C#x0E-#x10FFFF]
+NEWLINE    ::= CR LF?

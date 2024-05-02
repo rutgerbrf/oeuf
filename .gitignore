@@ -1,0 +1,7 @@
+.direnv/
+src/augmentkv6/augmentkv6
+src/bundleparquet/bundleparquet
+src/filterkv6/filterkv6
+src/querykv1/querykv1
+src/recvkv6/recvkv6
+result*
