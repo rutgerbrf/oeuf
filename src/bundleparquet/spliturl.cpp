@@ -14,7 +14,7 @@
 // splits it into two URLs:
 //   - scheme + host -> '[http[s]://]HOST'
 //   - port   + path -> '[PORT][/PATH]'
-// In case an IPv6 address is provided, the host must enclosed in square
+// In case an IPv6 address is provided, the host must be enclosed in square
 // brackets. The zone ID may also be indicated. Note that in the resulting
 // parts, the colon preceding the port number is omitted. This is on purpose.
 std::optional<SplitUrl> splitUrl(const std::string &url, std::string *error) {
@@ -44,8 +44,9 @@ std::optional<SplitUrl> splitUrl(const std::string &url, std::string *error) {
   // As we parse the URL with the option CURLU_DEFAULT_SCHEME, the CURL API
   // won't require the user to provide the scheme part of the URL. It will
   // automatically default the scheme to https. However, we do not usually want
-  // it to default to HTTPS, but HTTP instead (as the use case, connecting to a
-  // PushGateway server, usually is served over a private network via HTTP).
+  // it to default to HTTPS, but HTTP instead. (In this specific use case of
+  // connecting to a PushGateway server, we assume that the PushGateway server
+  // is available over a trusted network, and only using unsecured HTTP).
   // 
   // This is why we check if the scheme was put there by CURL and otherwise set
   // it to HTTP. We also check for any other schemes that the user may have
