@@ -6,7 +6,7 @@
 #include <vector>
 
 #define LONG_OPTIONS \
-/*  name                  req/opt/no arg     long        short */
+/*  name                  req/opt/no arg     long        short */ \
   X(kv1_file_path,        required_argument, "kv1",      0 ) \
   X(line_planning_number, required_argument, "line",     0 ) \
   X(journey_number,       required_argument, "journey",  0 ) \
