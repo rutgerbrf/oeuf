@@ -1,4 +1,6 @@
 // vim:set sw=2 ts=2 sts et:
+//
+// Copyright 2024 Rutger Broekhoff. Licensed under the EUPL.
 
 #ifndef OEUF_LIBTMI8_KV1_TYPES_HPP
 #define OEUF_LIBTMI8_KV1_TYPES_HPP

@@ -1,4 +1,6 @@
 // vim:set sw=2 ts=2 sts et:
+//
+// Copyright 2024 Rutger Broekhoff. Licensed under the EUPL.
 
 #ifndef OEUF_QUERYKV1_CLIOPTS_HPP
 #define OEUF_QUERYKV1_CLIOPTS_HPP
