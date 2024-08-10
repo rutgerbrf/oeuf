@@ -922,20 +922,22 @@ struct Kv6Parser {
 
   std::optional<Tmi8VvTmPushInfo> parse(const rapidxml::xml_document<> &doc) {
     std::optional<Tmi8VvTmPushInfo> msg;
-    for (const rapidxml::xml_node<> *node = doc.first_node(); node; node = node->next_sibling()) {
-      ifTmi8Element(*node, nullptr /* nss */, [&](std::string_view name, const Xmlns *nss) {
-        if (name == "VV_TM_PUSH") {
-          if (msg) {
-            error("Duplicated VV_TM_PUSH");
-            return;
+    withXmlnss(doc.first_attribute(), nullptr /* nss */, [&](const Xmlns *nss) {
+      for (const rapidxml::xml_node<> *node = doc.first_node(); node; node = node->next_sibling()) {
+        ifTmi8Element(*node, nss, [&](std::string_view name, const Xmlns *node_nss) {
+          if (name == "VV_TM_PUSH") {
+            if (msg) {
+              error("Duplicated VV_TM_PUSH");
+              return;
+            }
+            msg = parseVvTmPush(*node, node_nss);
+            if (!msg) {
+              error("Invalid VV_TM_PUSH");
+            }
           }
-          msg = parseVvTmPush(*node, nss);
-          if (!msg) {
-            error("Invalid VV_TM_PUSH");
-          }
-        }
-      });
-    }
+        });
+      }
+    });
     if (!msg)
       error("Expected to find VV_TM_PUSH");
     return msg;

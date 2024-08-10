@@ -122,16 +122,6 @@ std::optional<SplitUrl> splitUrl(const std::string &url, std::string *error) {
 
   schemehost = curl_url_dup(parsed);
 
-  // CURL BUG WORKAROUND: CURLUPART_ZONEID is NOT copied by curl_url_dup!
-  //      ^ fixed in CURL 8.3.0 after https://curl.se/mail/lib-2023-07/0047.html
-  rc = curl_url_get(parsed, CURLUPART_ZONEID, &zoneid, 0);
-  if (rc == CURLUE_OK) {
-    rc = curl_url_set(schemehost, CURLUPART_ZONEID, zoneid, 0);
-    if (rc != CURLUE_OK) {
-      errs << "Could not copy zone ID to duplicated URL: " << curl_url_strerror(rc);
-      goto Exit;
-    }
-  }
   rc = curl_url_set(schemehost, CURLUPART_PORT, nullptr, 0);
   if (rc != CURLUE_OK) {
     errs << "Could not unset port in duplicated URL: " << curl_url_strerror(rc);

@@ -374,7 +374,7 @@ static std::optional<std::chrono::sys_seconds> parseDateTime(std::string_view sr
   size_t tzd_off = time_off + 9;
   // For clarity, TZD stands for Time Zone Designator. It often takes the form
   // of Z (Zulu, UTC+00:00) or as an offset from UTC in hours and minutes,
-  // formatted as +|-HH:MM (e.g. +01:00, -12:00).
+  // formatted as ±HH:MM (e.g. +01:00, -12:00).
 
   if (time_off + 8 >= src.size()) ERROR("bad format, not enough space for hh:mm:ss");
 

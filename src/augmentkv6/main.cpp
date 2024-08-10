@@ -90,10 +90,10 @@ bool parse(Kv1Records &into) {
   parser.parse();
 
   bool ok = true;
-  if (!parser.gerrors.empty()) {
+  if (!parser.global_errors.empty()) {
     ok = false;
     fputs("Parser reported errors:\n", stderr);
-    for (const auto &error : parser.gerrors)
+    for (const auto &error : parser.global_errors)
       fprintf(stderr, "- %s\n", error.c_str());
   }
   if (!parser.warns.empty()) {

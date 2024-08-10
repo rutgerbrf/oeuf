@@ -130,6 +130,7 @@
 
           devShells.default = pkgs.mkShell {
             inputsFrom = [ oeuf-bundleparquet oeuf-querykv1 oeuf-recvkv6 ];
+            buildInputs = with pkgs; [ xercesc xsd ];
           };
 
           formatter = pkgs.nixpkgs-fmt;
