@@ -62,7 +62,7 @@ in
     }
     (mkIf cfg.enable {
       systemd.services.oeuf-recvkv6 = {
-        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
         wantedBy = [ "multi-user.target" ];
         environment = {
           METRICS_ADDR = cfg.metricsAddr;
@@ -90,7 +90,7 @@ in
       };
 
       systemd.services.oeuf-archiver = {
-        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
         environment = {
           S3_PROVIDER = archiverCfg.s3.provider;
           S3_REGION = archiverCfg.s3.region;
